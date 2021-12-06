@@ -28,6 +28,17 @@ public actual abstract class Charset(internal val _name: String) {
             else -> false
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null) return false
+        if (this::class != other::class) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return _name.hashCode()
+    }
 }
 
 private class CharsetImpl(name: String) : Charset(name) {

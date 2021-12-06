@@ -4,4 +4,7 @@
 
 package io.ktor.server.application.internal
 
-internal expect fun Throwable.initCauseBridge(cause: Throwable)
+/**
+ * Internal helper for setting cause on [Throwable] in MPP
+ */
+public expect fun Throwable.initCauseBridge(cause: Throwable)

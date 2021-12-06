@@ -4,6 +4,6 @@
 
 package io.ktor.server.application.internal
 
-internal actual fun Throwable.initCauseBridge(cause: Throwable) {
+public actual fun Throwable.initCauseBridge(cause: Throwable) {
     initCause(cause)
 }
