@@ -17,6 +17,7 @@ import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.*
 import kotlin.properties.*
+import kotlin.random.*
 
 /**
  * Plugin to support requests to specific content ranges.
@@ -197,7 +198,7 @@ public class PartialContent private constructor(private val maxRangeCount: Int) 
         ranges: List<LongRange>,
         length: Long
     ) {
-        val boundary = "ktor-boundary-" + generateNonce()
+        val boundary = "ktor-boundary-" + hex(Random.nextBytes(8))
 
         call.attributes.put(SuppressionAttribute, true) // multirange with compression is not supported yet
 

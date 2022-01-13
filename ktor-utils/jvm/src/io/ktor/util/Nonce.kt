@@ -97,13 +97,14 @@ private fun lookupSecureRandom(): SecureRandom {
     if (secure != null) return secure
 
     LoggerFactory.getLogger("io.ktor.util.random")
-        .warn("$SECURE_RANDOM_PROVIDER_NAME is not found, fallback to $SHA1PRNG")
+        .warn("$SECURE_RANDOM_PROVIDER_NAME is not found, fallback to default")
 
-    return getInstanceOrNull(SHA1PRNG) ?: error("No SecureRandom implementation found")
+    return getInstanceOrNull() ?: error("No SecureRandom implementation found")
 }
 
-private fun getInstanceOrNull(name: String) = try {
-    SecureRandom.getInstance(name)
+private fun getInstanceOrNull(name: String? = null) = try {
+    if (name != null) SecureRandom.getInstance(name)
+    else SecureRandom()
 } catch (notFound: NoSuchAlgorithmException) {
     null
 }
