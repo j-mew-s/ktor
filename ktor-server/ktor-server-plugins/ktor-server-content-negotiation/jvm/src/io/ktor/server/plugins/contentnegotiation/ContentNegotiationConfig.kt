@@ -17,7 +17,8 @@ public class ContentNegotiationConfig : Configuration {
 
     @PublishedApi
     internal val ignoredTypes: MutableSet<KClass<*>> = mutableSetOf(
-        HttpStatusCode::class
+        HttpStatusCode::class,
+        String::class
     )
 
     /**
