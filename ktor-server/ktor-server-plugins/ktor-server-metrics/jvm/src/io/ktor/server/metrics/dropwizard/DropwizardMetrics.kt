@@ -18,7 +18,7 @@ import java.util.concurrent.*
  * @property registry dropwizard metrics registry
  * @property baseName metrics base name (prefix)
  */
-public class DropwizardMetrics private constructor(
+public class DropwizardMetrics_Old private constructor(
     public val registry: MetricRegistry,
     public val baseName: String = name("ktor.calls")
 ) {
@@ -52,16 +52,16 @@ public class DropwizardMetrics private constructor(
     /**
      * Metrics plugin companion
      */
-    public companion object Plugin : ApplicationPlugin<Application, Configuration, DropwizardMetrics> {
-        override val key: AttributeKey<DropwizardMetrics> = AttributeKey("metrics")
+    public companion object Plugin : ApplicationPlugin<Application, Configuration, DropwizardMetrics_Old> {
+        override val key: AttributeKey<DropwizardMetrics_Old> = AttributeKey("metrics")
 
         private class RoutingMetrics(val name: String, val context: Timer.Context)
 
         private val routingMetricsKey = AttributeKey<RoutingMetrics>("metrics")
 
-        override fun install(pipeline: Application, configure: Configuration.() -> Unit): DropwizardMetrics {
+        override fun install(pipeline: Application, configure: Configuration.() -> Unit): DropwizardMetrics_Old {
             val configuration = Configuration().apply(configure)
-            val plugin = DropwizardMetrics(configuration.registry, configuration.baseName)
+            val plugin = DropwizardMetrics_Old(configuration.registry, configuration.baseName)
 
             if (configuration.registerJvmMetricSets) {
                 listOf<Pair<String, () -> Metric>>(
@@ -77,7 +77,7 @@ public class DropwizardMetrics private constructor(
                     .forEach { (name, metric) -> configuration.registry.register(name, metric()) }
             }
 
-            val phase = PipelinePhase("DropwizardMetrics")
+            val phase = PipelinePhase("DropwizardMetrics_Old")
             pipeline.insertPhaseBefore(ApplicationCallPipeline.Monitoring, phase)
             pipeline.intercept(phase) {
                 plugin.before(call)
